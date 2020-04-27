@@ -1,5 +1,6 @@
 # Integer_Net GlobalCustomLayout
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 
 Allows you to add global layout update files to be selected from admin, by using `0` instead of a `category_id` / `sku` / `url_path`.
@@ -66,6 +67,7 @@ If you discover any security related issues, please email ww@integer-net.de inst
 
 The MIT License (MIT). Please see [License File](LICENSE.txt) for more information.
 
+[ico-version]: https://img.shields.io/packagist/v/integer-net/magento2-global-custom-layout.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/integer-net/magento2-global-custom-layout
