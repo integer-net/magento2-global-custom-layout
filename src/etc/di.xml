@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Category\Attribute\LayoutUpdateManager">
+        <plugin name="integernet_global_custom_layout" type="IntegerNet\GlobalCustomLayout\Plugin\CategoryLayoutPlugin" />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Attribute\LayoutUpdateManager">
+        <plugin name="integernet_global_custom_layout" type="IntegerNet\GlobalCustomLayout\Plugin\ProductLayoutPlugin" />
+    </type>
+    <type name="Magento\Cms\Model\Page\CustomLayout\CustomLayoutManager">
+        <plugin name="integernet_global_custom_layout" type="IntegerNet\GlobalCustomLayout\Plugin\PageLayoutPlugin"/>
+    </type>
+</config>

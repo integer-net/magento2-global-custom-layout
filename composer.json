@@ -1,0 +1,38 @@
+{
+    "name": "integer-net/magento2-global-custom-layout",
+    "description": "Module for Magento 2 that allows you to add global layout update files to be selected from admin, by using '0' instead of an entity_id",
+    "authors": [
+        {
+            "name": "Willem Wigman",
+            "email": "ww@integer-net.de"
+        }
+    ],
+    "require": {
+        "magento/framework": ">=102.0.4",
+        "magento/module-catalog": ">=103.0.4",
+        "magento/module-cms": ">=103.0.4",
+        "php": ">=7.1.0"
+    },
+    "type": "magento2-module",
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "IntegerNet\\GlobalCustomLayout\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "require-dev": {
+        "magento/magento-coding-standard": "@dev"
+    }
+}
+
