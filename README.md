@@ -2,6 +2,9 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
 
 Allows you to add global layout update files to be selected from admin, by using `0` instead of a `category_id` / `sku` / `url_path`.
 
@@ -69,7 +72,13 @@ The MIT License (MIT). Please see [License File](LICENSE.txt) for more informati
 
 [ico-version]: https://img.shields.io/packagist/v/integer-net/magento2-global-custom-layout.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/integer-net/magento2-global-custom-layout/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/integer-net/magento2-global-custom-layout.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/integer-net/magento2-global-custom-layout.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/integer-net/magento2-global-custom-layout
+[link-travis]: https://travis-ci.org/integer-net/magento2-global-custom-layout
+[link-scrutinizer]: https://scrutinizer-ci.com/g/integer-net/magento2-global-custom-layout/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/integer-net/magento2-global-custom-layout
 [link-author]: https://github.com/wigman
 [link-contributors]: ../../contributors
