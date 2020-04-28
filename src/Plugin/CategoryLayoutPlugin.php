@@ -99,7 +99,7 @@ class CategoryLayoutPlugin
 
         return array_merge($result, array_filter(
             array_map(
-                function (string $handle) use ($category) : ?string {
+                function(string $handle) use ($category) : ?string {
                     preg_match(
                         '/^catalog\_category\_view\_selectable\_0\_([a-z0-9]+)/i',
                         $handle,

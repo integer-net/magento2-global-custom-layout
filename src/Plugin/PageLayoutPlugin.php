@@ -110,7 +110,7 @@ class PageLayoutPlugin {
 
         return array_filter(
             array_map(
-                function (string $handle) : ?string {
+                function(string $handle) : ?string {
                     preg_match(
                         '/^cms\_page\_view\_selectable\_0\_([a-z0-9]+)/i',
                         $handle,
