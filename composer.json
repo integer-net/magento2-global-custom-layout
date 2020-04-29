@@ -23,7 +23,8 @@
             "src/registration.php"
         ],
         "psr-4": {
-            "IntegerNet\\GlobalCustomLayout\\": "src/"
+            "IntegerNet\\GlobalCustomLayout\\": "src/",
+            "IntegerNet\\GlobalCustomLayout\\Test\\": "tests/"
         }
     },
     "repositories": [
