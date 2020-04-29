@@ -73,7 +73,7 @@ The MIT License (MIT). Please see [License File](LICENSE.txt) for more informati
 [ico-version]: https://img.shields.io/packagist/v/integer-net/magento2-global-custom-layout.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/integer-net/magento2-global-custom-layout/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/integer-net/magento2-global-custom-layout.svg?style=flat-square
+[ico-scrutinizer]: https://scrutinizer-ci.com/g/integer-net/magento2-global-custom-layout/badges/coverage.png?b=master
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/integer-net/magento2-global-custom-layout.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/integer-net/magento2-global-custom-layout
