@@ -7,7 +7,6 @@ use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\TestFramework\Helper\Bootstrap;
 
 /**
  * Tests whether global layout handles are correctly saved on categories
