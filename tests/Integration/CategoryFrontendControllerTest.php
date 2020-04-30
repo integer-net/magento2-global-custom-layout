@@ -5,6 +5,8 @@ namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
 use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\TestFramework\Helper\Bootstrap;
 
 /**
@@ -17,8 +19,8 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      * Check that Global Custom Layout Update files work for Category views.
      *
      * @return void
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
      *
      * @magentoDataFixture Magento/CatalogUrlRewrite/_files/categories_with_product_ids.php
      */
@@ -29,11 +31,11 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
         $categoryId = 5;
 
         /** @var CategoryLayoutUpdateManager $layoutManager */
-        $layoutManager = Bootstrap::getObjectManager()->get(CategoryLayoutUpdateManager::class);
+        $layoutManager = $this->objectManager->get(CategoryLayoutUpdateManager::class);
         $layoutManager->setCategoryFakeFiles(0, [$file]);
 
         /** @var CategoryRepositoryInterface $categoryRepo */
-        $categoryRepo = Bootstrap::getObjectManager()->create(CategoryRepositoryInterface::class);
+        $categoryRepo = $this->objectManager->create(CategoryRepositoryInterface::class);
         $category = $categoryRepo->get($categoryId);
 
         //Updating the custom attribute.
@@ -44,7 +46,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
         $this->dispatch("catalog/category/view/id/$categoryId");
 
         //Layout handles must contain the file.
-        $handles = Bootstrap::getObjectManager()->get(\Magento\Framework\View\LayoutInterface::class)
+        $handles = $this->layoutInterface
             ->getUpdate()
             ->getHandles();
         $this->assertContains("catalog_category_view_selectable_0_{$file}", $handles);

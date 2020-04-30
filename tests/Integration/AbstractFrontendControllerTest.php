@@ -5,9 +5,7 @@ namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
 use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
 use Magento\Catalog\Model\Category\Attribute\LayoutUpdateManager;
-use Magento\Catalog\Model\Session;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Framework\Registry;
 use Magento\Framework\View\LayoutInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\TestFramework\TestCase\AbstractController;
@@ -21,22 +19,12 @@ abstract class AbstractFrontendControllerTest extends AbstractController
     /**
      * @var ObjectManagerInterface
      */
-    private $objectManager;
-
-    /**
-     * @var Registry
-     */
-    private $registry;
-
-    /**
-     * @var Session
-     */
-    private $session;
+    protected $objectManager;
 
     /**
      * @var LayoutInterface
      */
-    private $layout;
+    protected   $layoutInterface;
 
     /**
      * @inheritdoc
@@ -44,14 +32,11 @@ abstract class AbstractFrontendControllerTest extends AbstractController
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
+        $this->layoutInterface = $this->objectManager->get(LayoutInterface::class);
 
         $this->setUpPreferences();
 
         parent::setUp();
-
-        $this->registry = $this->objectManager->get(Registry::class);
-        $this->layout = $this->objectManager->get(LayoutInterface::class);
-        $this->session = $this->objectManager->get(Session::class);
     }
 
     private function setUpPreferences(): void
