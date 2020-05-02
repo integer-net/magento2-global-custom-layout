@@ -26,7 +26,6 @@ class CustomLayoutManager extends \Magento\TestFramework\Cms\Model\CustomLayoutM
      */
     public function fakeAvailableFiles(int $forPageId, ?array $files): void
     {
-        var_dump('added');
         if ($files === null) {
             unset($this->files[$forPageId]);
         } else {
