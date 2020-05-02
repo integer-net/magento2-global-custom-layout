@@ -49,6 +49,23 @@ More info on default behaviour of selectable layouts:
 
 Zero configuration needed.
 
+## Change log
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Testing
+
+### Magento Integration Tests
+
+0. Configure test database in `dev/tests/integration/etc/install-config-mysql.php`. [Read more in the Magento docs.](https://devdocs.magento.com/guides/v2.3/test/integration/integration_test_execution.html) 
+
+1. Copy `Test/Integration/phpunit.xml.dist` from the package to `dev/tests/integration/phpunit.xml` in your Magento installation.
+
+2. In that directory, run
+    ``` bash
+    ../../../vendor/bin/phpunit
+    ```
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
