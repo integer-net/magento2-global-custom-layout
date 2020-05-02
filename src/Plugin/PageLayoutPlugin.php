@@ -5,6 +5,7 @@ namespace IntegerNet\GlobalCustomLayout\Plugin;
 
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Api\PageRepositoryInterface;
+use Magento\Cms\Model\Page\CustomLayoutManagerInterface;
 use Magento\Cms\Model\Page\CustomLayout\CustomLayoutManager;
 use Magento\Cms\Model\Page\CustomLayout\Data\CustomLayoutSelectedInterface;
 use Magento\Cms\Model\Page\IdentityMap;
@@ -95,20 +96,20 @@ class PageLayoutPlugin {
     /**
      * Fetch list of available global files/handles for the page.
      *
-     * @param CustomLayoutManager $subject
-     * @param array $handles
+     * @param CustomLayoutManagerInterface $subject
+     * @param array $result
      * @param PageInterface $page
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterFetchAvailableFiles(
-        CustomLayoutManager $subject,
-        array $handles,
+        CustomLayoutManagerInterface $subject,
+        array $result,
         PageInterface $page
     ): array {
         $handles = $this->getLayoutProcessor()->getAvailableHandles();
 
-        return array_filter(
+        return array_merge($result, array_filter(
             array_map(
                 function(string $handle) : ?string {
                     preg_match(
@@ -124,18 +125,18 @@ class PageLayoutPlugin {
                 },
                 $handles
             )
-        );
+        ));
     }
 
     /**
-     * @param CustomLayoutManager $subject
+     * @param CustomLayoutManagerInterface $subject
      * @param $result
      * @param PageLayout $layout
      * @param CustomLayoutSelectedInterface $layoutSelected
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterApplyUpdate(
-        CustomLayoutManager $subject,
+        CustomLayoutManagerInterface $subject,
         $result,
         PageLayout $layout,
         CustomLayoutSelectedInterface $layoutSelected

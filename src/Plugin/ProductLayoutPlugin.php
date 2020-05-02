@@ -79,14 +79,14 @@ class ProductLayoutPlugin {
      * Fetch list of available global files/handles for the product.
      *
      * @param LayoutUpdateManager $subject
-     * @param array $handles
-     * @param CategoryInterface $category
+     * @param array $result
+     * @param ProductInterface $product
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterFetchAvailableFiles(
         LayoutUpdateManager $subject,
-        array $handles,
+        array $result,
         ProductInterface $product
     ): array {
         if (!$product->getSku()) {
@@ -95,7 +95,7 @@ class ProductLayoutPlugin {
 
         $handles = $this->getLayoutProcessor()->getAvailableHandles();
 
-        return array_filter(
+        return array_merge($result, array_filter(
             array_map(
                 function(string $handle) : ?string {
                     preg_match(
@@ -111,7 +111,7 @@ class ProductLayoutPlugin {
                 },
                 $handles
             )
-        );
+        ));
     }
 
     /**

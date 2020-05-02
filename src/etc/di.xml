@@ -6,7 +6,7 @@
     <type name="Magento\Catalog\Model\Product\Attribute\LayoutUpdateManager">
         <plugin name="integernet_global_custom_layout" type="IntegerNet\GlobalCustomLayout\Plugin\ProductLayoutPlugin" />
     </type>
-    <type name="Magento\Cms\Model\Page\CustomLayout\CustomLayoutManager">
+    <type name="Magento\Cms\Model\Page\CustomLayoutManagerInterface">
         <plugin name="integernet_global_custom_layout" type="IntegerNet\GlobalCustomLayout\Plugin\PageLayoutPlugin"/>
     </type>
 </config>
