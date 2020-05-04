@@ -23,7 +23,7 @@
         <whitelist addUncoveredFilesFromWhiteList="true">
             <directory suffix=".php">../../../vendor/integer-net/*/src</directory>
             <exclude>
-                <directory>../../../vendor/integer-net/*/src/registration.php</directory>
+                <file>../../../vendor/integer-net/*/src/registration.php</file>
             </exclude>
         </whitelist>
     </filter>
