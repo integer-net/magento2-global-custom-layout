@@ -5,6 +5,7 @@ namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
 use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -14,6 +15,26 @@ use Magento\Framework\Exception\NoSuchEntityException;
  */
 class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
 {
+    /** @var int */
+    const CATEGORY_ID = 5;
+
+    /** @var CategoryRepositoryInterface $repository */
+    protected $repository;
+
+    /** @var CategoryLayoutUpdateManager $layoutManager */
+    protected $layoutManager;
+
+    /** @var CategoryInterface $category */
+    protected $category;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->layoutManager = $this->objectManager->get(CategoryLayoutUpdateManager::class);
+        $this->repository = $this->objectManager->create(CategoryRepositoryInterface::class);
+    }
+
     /**
      * Check that Global Custom Layout Update files work for Category views.
      *
@@ -23,31 +44,113 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      *
      * @magentoDataFixture Magento/CatalogUrlRewrite/_files/categories_with_product_ids.php
      */
-    public function testViewWithGlobalCustomUpdate(): void
+    public function testViewContainsGlobalCustomUpdate(): void
     {
-        //Setting a fake file for the category.
-        $file = 'test-file';
-        $categoryId = 5;
+        $this->givenGlobalCustomUpdateSelected();
+        $this->whenCategoryViewed();
+        $this->thenContainsGlobalUpdateHandle();
+    }
 
-        /** @var CategoryLayoutUpdateManager $layoutManager */
-        $layoutManager = $this->objectManager->get(CategoryLayoutUpdateManager::class);
-        $layoutManager->setCategoryFakeFiles(0, [$file]);
+    /**
+     * Check that Default Custom Layout Update files still work for Category views.
+     *
+     * @return void
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     *
+     * @magentoDataFixture Magento/CatalogUrlRewrite/_files/categories_with_product_ids.php
+     */
+    public function testViewContainsDefaultCustomUpdate(): void
+    {
+        $this->givenDefaultCustomUpdateSelected();
+        $this->whenCategoryViewed();
+        $this->thenContainsDefaultUpdateHandle();
+    }
 
-        /** @var CategoryRepositoryInterface $categoryRepo */
-        $categoryRepo = $this->objectManager->create(CategoryRepositoryInterface::class);
-        $category = $categoryRepo->get($categoryId);
+    /**
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     */
+    protected function givenGlobalCustomUpdateSelected()
+    {
+        $this->setCustomUpdate(self::GLOBAL_IDENTIFIER);
+    }
+
+    /**
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     */
+    protected function givenDefaultCustomUpdateSelected()
+    {
+        $this->setCustomUpdate(self::CATEGORY_ID);
+    }
+
+    /**
+     * @param int $forCategoryId
+     * @param string $fileName
+     * @throws CouldNotSaveException
+     * @throws NoSuchEntityException
+     */
+    protected function setCustomUpdate(int $forCategoryId, string $fileName = self::TEST_FILE)
+    {
+        $category = $this->getCategory();
+
+        $this->layoutManager->setFakeFiles($forCategoryId, [$fileName]);
 
         //Updating the custom attribute.
-        $category->setCustomAttribute('custom_layout_update_file', $file);
-        $categoryRepo->save($category);
+        $category->setCustomAttribute('custom_layout_update_file', $fileName);
+        $this->repository->save($category);
+    }
 
-        //Viewing the category
-        $this->dispatch("catalog/category/view/id/$categoryId");
+    /**
+     * Viewing the category
+     *
+     * @param int $categoryId
+     */
+    protected function whenCategoryViewed(?int $categoryId = null)
+    {
+        if (!$categoryId) {
+            $categoryId = self::CATEGORY_ID;
+        }
+        $this->dispatch("catalog/category/view/id/{$categoryId}");
+    }
 
-        //Layout handles must contain the file.
-        $handles = $this->layoutInterface
-            ->getUpdate()
-            ->getHandles();
-        $this->assertContains("catalog_category_view_selectable_0_{$file}", $handles);
+    protected function thenContainsGlobalUpdateHandle()
+    {
+        $this->containsUpdateHandle(self::GLOBAL_IDENTIFIER, self::TEST_FILE);
+    }
+
+    protected function thenContainsDefaultUpdateHandle()
+    {
+        $this->containsUpdateHandle(self::CATEGORY_ID, self::TEST_FILE);
+    }
+
+    /**
+     * Layout handles must contain the file.
+     *
+     * @param int|string $identifier
+     * @param string $fileName
+     */
+    protected function containsUpdateHandle(
+        $identifier = self::GLOBAL_IDENTIFIER,
+        string $fileName = self::TEST_FILE)
+    {
+        $expectedHandle = "catalog_category_view_selectable_{$identifier}_{$fileName}";
+
+        $handles = $this->layoutInterface->getUpdate()->getHandles();
+        $this->assertContains($expectedHandle, $handles);
+    }
+
+    /**
+     * @param int $categoryId
+     * @return CategoryInterface
+     * @throws NoSuchEntityException
+     */
+    protected function getCategory(int $categoryId = self::CATEGORY_ID): CategoryInterface
+    {
+        if (!$this->category) {
+            $this->category = $this->repository->get($categoryId);
+        }
+        return $this->category;
     }
 }

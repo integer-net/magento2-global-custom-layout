@@ -4,19 +4,20 @@ declare(strict_types=1);
 namespace IntegerNet\GlobalCustomLayout\Test\Util;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\Product\Attribute\LayoutUpdateManager;
 
 /**
  * Easy way to fake available files.
  */
-class ProductLayoutUpdateManager extends \Magento\TestFramework\Catalog\Model\ProductLayoutUpdateManager
+class ProductLayoutUpdateManager extends LayoutUpdateManager
 {
     /**
-     * @var array Keys are product IDs, values - file names.
+     * @var array Keys are Product IDs, values - file names.
      */
     private $fakeFiles = [];
 
     /**
-     * Supply fake files for a product.
+     * Supply fake files for a Product.
      *
      * @param int $forProductId
      * @param string[]|null $files Pass null to reset.
@@ -32,16 +33,20 @@ class ProductLayoutUpdateManager extends \Magento\TestFramework\Catalog\Model\Pr
 
     /**
      * Fetches fake/mock files added through $this->setFakeFiles()
+     * for current Product and Global (0)
+     *
+     * If none found, fall back to original method
      *
      * @param ProductInterface $product
      * @return array
      */
     public function fetchAvailableFiles(ProductInterface $product): array
     {
-        if (array_key_exists(0, $this->fakeFiles)) {
-            return $this->fakeFiles[0];
-        }
-
-        return parent::fetchAvailableFiles($product);
+        return array_unique(
+            array_merge(
+                ($this->fakeFiles[$product->getId()] ?? []),
+                ($this->fakeFiles[0] ?? [])
+            )
+        ) ?: parent::fetchAvailableFiles($product);
     }
 }
