@@ -21,7 +21,10 @@
     <!-- Code coverage filters -->
     <filter>
         <whitelist addUncoveredFilesFromWhiteList="true">
-            <directory suffix=".php">../../../vendor/integer-net/magento2-global-custom-layout/src</directory>
+            <directory suffix=".php">../../../vendor/integer-net/*/src</directory>
+            <exclude>
+                <directory>../../../vendor/integer-net/*/src/registration.php</directory>
+            </exclude>
         </whitelist>
     </filter>
     <!-- PHP INI settings and constants definition -->
