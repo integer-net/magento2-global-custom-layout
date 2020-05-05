@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\Util\ProductLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\ProductLayoutUpdateManager;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;

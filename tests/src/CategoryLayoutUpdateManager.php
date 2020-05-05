@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace IntegerNet\GlobalCustomLayout\Test\Util;
+namespace IntegerNet\GlobalCustomLayout\Test\src;
 
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Catalog\Model\Category\Attribute\LayoutUpdateManager;

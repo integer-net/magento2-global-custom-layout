@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\CategoryLayoutUpdateManager;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;

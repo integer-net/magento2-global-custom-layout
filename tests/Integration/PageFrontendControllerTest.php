@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\Util\PageLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\PageLayoutUpdateManager;
 use Magento\Cms\Model\Page;
 use Magento\Cms\Model\Page\CustomLayoutRepositoryInterface;
 use Magento\Cms\Model\PageFactory;

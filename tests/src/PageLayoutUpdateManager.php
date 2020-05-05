@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace IntegerNet\GlobalCustomLayout\Test\Util;
+namespace IntegerNet\GlobalCustomLayout\Test\src;
 
 use Magento\Cms\Api\Data\PageInterface;
 use Magento\Cms\Model\Page\CustomLayout\CustomLayoutManager;

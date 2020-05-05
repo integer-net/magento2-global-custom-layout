@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\Util\CategoryLayoutUpdateManager;
-use IntegerNet\GlobalCustomLayout\Test\Util\PageLayoutUpdateManager;
-use IntegerNet\GlobalCustomLayout\Test\Util\ProductLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\CategoryLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\PageLayoutUpdateManager;
+use IntegerNet\GlobalCustomLayout\Test\src\ProductLayoutUpdateManager;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\View\LayoutInterface;
 use Magento\TestFramework\Helper\Bootstrap;
