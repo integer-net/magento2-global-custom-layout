@@ -44,8 +44,7 @@ class CategoryLayoutPlugin
     public function __construct(
         FlyweightFactory $themeFactory,
         DesignInterface $design,
-        LayoutProcessorFactory $layoutProcessorFactory
-    )
+        LayoutProcessorFactory $layoutProcessorFactory)
     {
         $this->themeFactory = $themeFactory;
         $this->design = $design;
@@ -66,7 +65,7 @@ class CategoryLayoutPlugin
                 [
                     'theme' => $this->themeFactory->create(
                         $this->design->getConfigurationDesignTheme(Area::AREA_FRONTEND)
-                    )
+                    ),
                 ]
             );
             $this->themeFactory = null;
@@ -88,32 +87,30 @@ class CategoryLayoutPlugin
     public function afterFetchAvailableFiles(
         LayoutUpdateManager $subject,
         array $result,
-        CategoryInterface $category
-    ): array
+        CategoryInterface $category): array
     {
-        if (!$category->getId()) {
-            return $result;
-        }
-
         $handles = $this->getLayoutProcessor()->getAvailableHandles();
 
-        return array_merge($result, array_filter(
-            array_map(
-                function(string $handle) use ($category) : ?string {
-                    preg_match(
-                        '/^catalog\_category\_view\_selectable\_0\_([a-z0-9]+)/i',
-                        $handle,
-                        $selectable
-                    );
-                    if (!empty($selectable[1])) {
-                        return $selectable[1];
-                    }
+        return array_merge(
+            $result,
+            array_filter(
+                array_map(
+                    function (string $handle): ?string {
+                        preg_match(
+                            '/^catalog\_category\_view\_selectable\_0\_([a-z0-9]+)/i',
+                            $handle,
+                            $selectable
+                        );
+                        if (!empty($selectable[1])) {
+                            return $selectable[1];
+                        }
 
-                    return null;
-                },
-                $handles
+                        return null;
+                    },
+                    $handles
+                )
             )
-        ));
+        );
     }
 
     /**
@@ -132,8 +129,7 @@ class CategoryLayoutPlugin
         LayoutUpdateManager $subject,
         $result,
         CategoryInterface $category,
-        DataObject $intoSettings
-    ): void
+        DataObject $intoSettings): void
     {
         if ($category->getId() && $value = $this->extractAttributeValue($category)) {
             $handles = $intoSettings->getPageLayoutHandles() ?? [];

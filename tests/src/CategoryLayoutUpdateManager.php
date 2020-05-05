@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace IntegerNet\GlobalCustomLayout\Test\Util;
+namespace IntegerNet\GlobalCustomLayout\Test\src;
 
 use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Catalog\Model\Category\Attribute\LayoutUpdateManager;
 
 /**
  * Easy way to fake available files.
  */
-class CategoryLayoutUpdateManager extends \Magento\TestFramework\Catalog\Model\CategoryLayoutUpdateManager
+class CategoryLayoutUpdateManager extends LayoutUpdateManager
 {
     /**
      * @var array Keys are category IDs, values - file names.
@@ -16,12 +17,12 @@ class CategoryLayoutUpdateManager extends \Magento\TestFramework\Catalog\Model\C
     private $fakeFiles = [];
 
     /**
-     * Supply fake files for a category.
+     * Supply fake files for a Category.
      *
      * @param int $forCategoryId
      * @param string[]|null $files Pass null to reset.
      */
-    public function setCategoryFakeFiles(int $forCategoryId, ?array $files): void
+    public function setFakeFiles(int $forCategoryId, ?array $files): void
     {
         if ($files === null) {
             unset($this->fakeFiles[$forCategoryId]);
@@ -32,15 +33,20 @@ class CategoryLayoutUpdateManager extends \Magento\TestFramework\Catalog\Model\C
 
     /**
      * Fetches fake/mock files added through $this->setCategoryFakeFiles()
+     * for current Category and Global (0)
+     *
+     * If none found, fall back to original method
      *
      * @param CategoryInterface $category
      * @return array
      */
     public function fetchAvailableFiles(CategoryInterface $category): array
     {
-        if (array_key_exists(0, $this->fakeFiles)) {
-            return $this->fakeFiles[0];
-        }
-        return parent::fetchAvailableFiles($category);
+        return array_unique(
+            array_merge(
+                ($this->fakeFiles[$category->getId()] ?? []),
+                ($this->fakeFiles[0] ?? [])
+            )
+        ) ?: parent::fetchAvailableFiles($category);
     }
 }
