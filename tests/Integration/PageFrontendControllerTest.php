@@ -12,7 +12,7 @@ use Magento\Cms\Model\ResourceModel\Page as PageResourceModel;
 class PageFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var string */
-    const PAGE_IDENTIFIER = 'page100';
+    const PAGE_ID_FROM_FIXTURE = 'page100';
 
     /** @var PageLayoutUpdateManager */
     protected $layoutManager;
@@ -98,7 +98,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function thenContainsDefaultUpdateHandle()
     {
-        $this->containsUpdateHandle(self::PAGE_IDENTIFIER);
+        $this->containsUpdateHandle(self::PAGE_ID_FROM_FIXTURE);
     }
 
     /**
@@ -131,7 +131,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
      * @param string $pageIdentifier
      * @return Page
      */
-    protected function createPage(?string $pageIdentifier = self::PAGE_IDENTIFIER): Page
+    protected function createPage(?string $pageIdentifier = self::PAGE_ID_FROM_FIXTURE): Page
     {
         $page = $this->pageFactory->create(['customLayoutRepository' => $this->repository]);
         $page->setStoreId(self::STORE_ID);

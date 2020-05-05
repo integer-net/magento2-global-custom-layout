@@ -14,7 +14,7 @@ use Magento\Framework\Exception\StateException;
 class ProductFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var string */
-    const PRODUCT_SKU = 'simple_product_1';
+    const PRODUCT_SKU_FROM_FIXTURE = 'simple_product_1';
 
     /** @var ProductRepositoryInterface $repository */
     protected $repository;
@@ -110,7 +110,7 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function thenContainsDefaultUpdateHandle()
     {
-        $this->containsUpdateHandle(self::PRODUCT_SKU);
+        $this->containsUpdateHandle(self::PRODUCT_SKU_FROM_FIXTURE);
     }
 
     /**
@@ -152,7 +152,7 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
      * @return ProductInterface
      * @throws NoSuchEntityException
      */
-    protected function getProduct(string $sku = self::PRODUCT_SKU): ProductInterface
+    protected function getProduct(string $sku = self::PRODUCT_SKU_FROM_FIXTURE): ProductInterface
     {
         if (!$this->product) {
             $this->product = $this->repository->get($sku);

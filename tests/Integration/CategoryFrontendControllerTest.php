@@ -16,7 +16,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var int */
-    const CATEGORY_ID = 5;
+    const CATEGORY_ID_FROM_FIXTURE = 5;
 
     /** @var CategoryRepositoryInterface $repository */
     protected $repository;
@@ -82,7 +82,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function givenDefaultCustomUpdateSelected()
     {
-        $this->setCustomUpdate(self::CATEGORY_ID);
+        $this->setCustomUpdate(self::CATEGORY_ID_FROM_FIXTURE);
     }
 
     /**
@@ -110,7 +110,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
     protected function whenCategoryViewed(?int $categoryId = null)
     {
         if (!$categoryId) {
-            $categoryId = self::CATEGORY_ID;
+            $categoryId = self::CATEGORY_ID_FROM_FIXTURE;
         }
         $this->dispatch("catalog/category/view/id/{$categoryId}");
     }
@@ -122,7 +122,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function thenContainsDefaultUpdateHandle()
     {
-        $this->containsUpdateHandle(self::CATEGORY_ID, self::TEST_FILE);
+        $this->containsUpdateHandle(self::CATEGORY_ID_FROM_FIXTURE, self::TEST_FILE);
     }
 
     /**
@@ -146,7 +146,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      * @return CategoryInterface
      * @throws NoSuchEntityException
      */
-    protected function getCategory(int $categoryId = self::CATEGORY_ID): CategoryInterface
+    protected function getCategory(int $categoryId = self::CATEGORY_ID_FROM_FIXTURE): CategoryInterface
     {
         if (!$this->category) {
             $this->category = $this->repository->get($categoryId);
