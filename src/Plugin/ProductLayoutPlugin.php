@@ -14,7 +14,8 @@ use Magento\Framework\View\DesignInterface;
 use Magento\Framework\View\Model\Layout\Merge as LayoutProcessor;
 use Magento\Framework\View\Model\Layout\MergeFactory as LayoutProcessorFactory;
 
-class ProductLayoutPlugin {
+class ProductLayoutPlugin
+{
 
     /**
      * @var FlyweightFactory
@@ -44,8 +45,8 @@ class ProductLayoutPlugin {
     public function __construct(
         FlyweightFactory $themeFactory,
         DesignInterface $design,
-        LayoutProcessorFactory $layoutProcessorFactory
-    ) {
+        LayoutProcessorFactory $layoutProcessorFactory)
+    {
         $this->themeFactory = $themeFactory;
         $this->design = $design;
         $this->layoutProcessorFactory = $layoutProcessorFactory;
@@ -65,7 +66,7 @@ class ProductLayoutPlugin {
                 [
                     'theme' => $this->themeFactory->create(
                         $this->design->getConfigurationDesignTheme(Area::AREA_FRONTEND)
-                    )
+                    ),
                 ]
             );
             $this->themeFactory = null;
@@ -87,31 +88,30 @@ class ProductLayoutPlugin {
     public function afterFetchAvailableFiles(
         LayoutUpdateManager $subject,
         array $result,
-        ProductInterface $product
-    ): array {
-        if (!$product->getSku()) {
-            return [];
-        }
-
+        ProductInterface $product): array
+    {
         $handles = $this->getLayoutProcessor()->getAvailableHandles();
 
-        return array_merge($result, array_filter(
-            array_map(
-                function(string $handle) : ?string {
-                    preg_match(
-                        '/^catalog\_product\_view\_selectable\_0\_([a-z0-9]+)/i',
-                        $handle,
-                        $selectable
-                    );
-                    if (!empty($selectable[1])) {
-                        return $selectable[1];
-                    }
+        return array_merge(
+            $result,
+            array_filter(
+                array_map(
+                    function (string $handle): ?string {
+                        preg_match(
+                            '/^catalog\_product\_view\_selectable\_0\_([a-z0-9]+)/i',
+                            $handle,
+                            $selectable
+                        );
+                        if (!empty($selectable[1])) {
+                            return $selectable[1];
+                        }
 
-                    return null;
-                },
-                $handles
+                        return null;
+                    },
+                    $handles
+                )
             )
-        ));
+        );
     }
 
     /**
@@ -130,8 +130,8 @@ class ProductLayoutPlugin {
         LayoutUpdateManager $subject,
         $result,
         ProductInterface $product,
-        DataObject $intoSettings
-    ): void {
+        DataObject $intoSettings): void
+    {
         if ($product->getSku() && $value = $this->extractAttributeValue($product)) {
             $handles = $intoSettings->getPageLayoutHandles() ?? [];
             $handles = array_merge_recursive(
