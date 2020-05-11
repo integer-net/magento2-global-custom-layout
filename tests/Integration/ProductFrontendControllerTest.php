@@ -25,7 +25,7 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
     /** @var ProductLayoutUpdateManager $layoutManager */
     protected $layoutManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
