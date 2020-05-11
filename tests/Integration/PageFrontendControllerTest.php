@@ -29,7 +29,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
     /** @var CustomLayoutRepositoryInterface $repository */
     protected $repository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

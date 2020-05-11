@@ -1,6 +1,8 @@
 os: linux
 dist: trusty
 group: edge
+services:
+  - elasticsearch
 addons:
   apt:
     packages:
@@ -25,10 +27,6 @@ jobs:
       env:
         - MAGENTO_VERSION=2.3
         - TEST_SUITE=integration
-    - php: 7.2
-      env:
-        - MAGENTO_VERSION=2.4-develop
-        - TEST_SUITE=integration
 env:
   global:
     - COMPOSER_BIN_DIR=~/bin
@@ -37,7 +35,10 @@ cache:
   apt: true
   directories:
     - $HOME/.composer/cache
-before_script: ./.travis/before_script.sh
+before_script:
+  - |
+    sleep 10
+    ./.travis/before_script.sh
 script: phpunit -c magento2/dev/tests/$TEST_SUITE --coverage-text --coverage-clover=/tmp/coverage.clover
 after_script:
   - |

@@ -38,7 +38,7 @@ abstract class AbstractFrontendControllerTest extends AbstractController
     /**
      * @inheritdoc
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectManager = Bootstrap::getObjectManager();
         $this->layoutInterface = $this->objectManager->get(LayoutInterface::class);

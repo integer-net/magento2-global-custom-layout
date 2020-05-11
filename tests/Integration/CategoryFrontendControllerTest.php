@@ -27,7 +27,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
     /** @var CategoryInterface $category */
     protected $category;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
