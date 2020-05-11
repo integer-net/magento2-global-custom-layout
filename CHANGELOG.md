@@ -13,3 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Adds frontend test coverage for global custom layout updates
 - Fixes [#7](https://github.com/integer-net/magento2-global-custom-layout/issues/7) where layout handles were not merged in Product and Page Plugins' `afterFetchAvailableFiles()` method.
+
+## 1.1.1 - 2020-05-08
+### Added
+- Adds module registration test (registration.php coverage)
+- Adds travis config for tags/releases

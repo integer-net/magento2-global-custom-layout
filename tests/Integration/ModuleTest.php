@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Component\ComponentRegistrar;
 use Magento\Framework\Module\ModuleList;
 use PHPUnit\Framework\TestCase;
 
@@ -19,6 +20,13 @@ class ModuleTest extends TestCase
     protected function setUp()
     {
         $this->objectManager = ObjectManager::getInstance();
+    }
+
+    public function testModuleIsRegistered()
+    {
+        $registrar = new ComponentRegistrar();
+        $paths = $registrar->getPaths(ComponentRegistrar::MODULE);
+        $this->assertArrayHasKey(self::MODULE_NAME, $paths);
     }
 
     public function testModuleIsActive()
