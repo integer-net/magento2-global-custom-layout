@@ -18,3 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Adds module registration test (registration.php coverage)
 - Adds travis config for tags/releases
+
+## 1.1.2 - 2020-05-11
+### Added
+- Updates travis, magento 2.4-dev now requires elasticsearch
+- Adds return type declaration (`void`) to setUp() functions, now needed for magento 2.3.4
