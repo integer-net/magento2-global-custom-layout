@@ -17,13 +17,8 @@ jobs:
   include:
     - php: 7.4
       env:
-        - MAGENTO_VERSION=2.3
-        - TEST_SUITE=integration
-    - php: 7.4
-      env:
         - MAGENTO_VERSION=2.4-develop
         - TEST_SUITE=integration
-
     - php: 7.3
       env:
         - MAGENTO_VERSION=2.3
