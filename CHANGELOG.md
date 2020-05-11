@@ -22,4 +22,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.1.2 - 2020-05-11
 ### Added
 - Updates travis, magento 2.4-dev now requires elasticsearch
-- Adds return type declaration (`void`) to setUp() functions, now needed for magento 2.3.4
+- Adds return type declaration (`void`) to `setUp()` functions, now needed for magento 2.4
