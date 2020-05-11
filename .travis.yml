@@ -1,5 +1,5 @@
 os: linux
-dist: xenial
+dist: trusty
 group: edge
 services:
   - elasticsearch
@@ -15,10 +15,6 @@ addons:
 language: php
 jobs:
   include:
-    - php: 7.4
-      env:
-        - MAGENTO_VERSION=2.4-develop
-        - TEST_SUITE=integration
     - php: 7.3
       env:
         - MAGENTO_VERSION=2.3
