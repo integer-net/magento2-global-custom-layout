@@ -82,7 +82,7 @@ abstract class AbstractFrontendControllerTest extends AbstractController
     /**
      * @throws FileSystemException
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->restoreInitialConfig();
     }
