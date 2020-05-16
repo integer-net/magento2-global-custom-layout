@@ -59,7 +59,6 @@ abstract class AbstractFrontendControllerTest extends AbstractController
      */
     protected function setUp(): void
     {
-        Bootstrap::getInstance()->reinitialize();
         $this->objectManager = Bootstrap::getObjectManager();
         $this->layout = $this->objectManager->get(LayoutInterface::class);
         $this->configWriter = $this->objectManager->get(Writer::class);
@@ -74,6 +73,10 @@ abstract class AbstractFrontendControllerTest extends AbstractController
     {
         $this->moduleStatus = $this->objectManager->create(ModuleStatus::class);
         $this->moduleStatus->setIsEnabled(true, ['IntegerNet_GlobalCustomLayoutTest']);
+
+        $this->objectManager->removeSharedInstance(\Magento\Framework\Module\Manager::class);
+        $this->objectManager->removeSharedInstance(\Magento\Framework\Module\ModuleList::class);
+        $this->objectManager->removeSharedInstance(\Magento\Framework\View\Model\Layout\Merge::class);
     }
 
     /**
