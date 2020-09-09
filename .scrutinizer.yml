@@ -1,0 +1,24 @@
+filter:
+  excluded_paths:
+    - 'tests/*'
+
+build:
+  environment:
+    php: 7.3
+  tests:
+    override:
+      - true
+  nodes:
+    analysis:
+      dependencies:
+        after:
+            - vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/
+      tests:
+        override:
+          - php-scrutinizer-run
+          - phpcs-run
+
+tools:
+  external_code_coverage:
+    runs: 1          # Scrutinizer will wait for one code coverage submission (integration test suite)
+    timeout: 2400    # Timeout in seconds.

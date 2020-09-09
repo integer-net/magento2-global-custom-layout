@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset>
+    <exclude-pattern>tests/</exclude-pattern>
+    <rule ref="Magento2"/>
+</ruleset>

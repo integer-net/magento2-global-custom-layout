@@ -1,0 +1,12 @@
+grumphp:
+    tasks:
+      composer: []
+      phpcs: ~
+      phpstan:
+          configuration: phpstan.neon
+      phpparser:
+          visitors:
+              no_exit_statements: ~
+              forbidden_function_calls:
+                  blacklist:
+                      - 'var_dump'
