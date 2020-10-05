@@ -90,7 +90,6 @@ class CategoryLayoutPlugin
         CategoryInterface $category): array
     {
         $handles = $this->getLayoutProcessor()->getAvailableHandles();
-
         return array_merge(
             $result,
             array_filter(

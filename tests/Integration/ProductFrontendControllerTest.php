@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\src\ProductLayoutUpdateManager;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -11,6 +10,14 @@ use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\StateException;
 
+/**
+ * Tests whether global layout handles are correctly saved on Products
+ * and retrieved on the frontend on Product views
+ *
+ * @magentoAppIsolation enabled
+ * @magentoAppArea frontend
+ * @magentoComponentsDir ../../../../vendor/integer-net/magento2-global-custom-layout/tests/Integration/_files/app/code/IntegerNet
+ */
 class ProductFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var string */
@@ -22,14 +29,10 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
     /** @var ProductInterface $product */
     protected $product;
 
-    /** @var ProductLayoutUpdateManager $layoutManager */
-    protected $layoutManager;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->layoutManager = $this->objectManager->get(ProductLayoutUpdateManager::class);
         $this->repository = $this->objectManager->create(ProductRepositoryInterface::class);
     }
 
@@ -121,11 +124,11 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function containsUpdateHandle(
         $identifier = self::GLOBAL_IDENTIFIER,
-        string $fileName = self::TEST_FILE)
+        string $fileName = self::GLOBAL_TEST_FILE)
     {
         $expectedHandle = "catalog_product_view_selectable_{$identifier}_{$fileName}";
 
-        $handles = $this->layoutInterface->getUpdate()->getHandles();
+        $handles = $this->layout->getUpdate()->getHandles();
         $this->assertContains($expectedHandle, $handles);
     }
 
@@ -137,12 +140,9 @@ class ProductFrontendControllerTest extends AbstractFrontendControllerTest
      * @throws NoSuchEntityException
      * @throws StateException
      */
-    protected function setCustomUpdate(int $forProductId, string $fileName = self::TEST_FILE)
+    protected function setCustomUpdate(int $forProductId, string $fileName = self::GLOBAL_TEST_FILE)
     {
         $product = $this->getProduct();
-
-        $this->layoutManager->setFakeFiles($forProductId, [$fileName]);
-
         $product->setCustomAttribute('custom_layout_update_file', $fileName);
         $this->repository->save($product);
     }

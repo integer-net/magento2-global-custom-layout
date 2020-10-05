@@ -3,19 +3,23 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\src\PageLayoutUpdateManager;
 use Magento\Cms\Model\Page;
 use Magento\Cms\Model\Page\CustomLayoutRepositoryInterface;
 use Magento\Cms\Model\PageFactory;
 use Magento\Cms\Model\ResourceModel\Page as PageResourceModel;
 
+/**
+ * Tests whether global layout handles are correctly saved on CMS Pages
+ * and retrieved on the frontend on Page views
+ *
+ * @magentoAppIsolation enabled
+ * @magentoAppArea frontend
+ * @magentoComponentsDir ../../../../vendor/integer-net/magento2-global-custom-layout/tests/Integration/_files/app/code/IntegerNet
+ */
 class PageFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var string */
     const PAGE_ID_FROM_FIXTURE = 'page100';
-
-    /** @var PageLayoutUpdateManager */
-    protected $layoutManager;
 
     /** @var Page */
     protected $page;
@@ -33,13 +37,8 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
     {
         parent::setUp();
 
-        $this->layoutManager = $this->objectManager->get(PageLayoutUpdateManager::class);
         $this->pageResource = $this->objectManager->get(PageResourceModel::class);
         $this->pageFactory = $this->objectManager->get(PageFactory::class);
-        $this->repository = $this->objectManager->create(
-            CustomLayoutRepositoryInterface::class,
-            ['manager' => $this->layoutManager]
-        );
     }
 
     /**
@@ -75,7 +74,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function givenDefaultCustomUpdateSelected()
     {
-        $this->setCustomUpdate($this->getPageId());
+        $this->setCustomUpdate($this->getPageId(), self::DEFAULT_TEST_FILE);
     }
 
     /**
@@ -98,7 +97,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function thenContainsDefaultUpdateHandle()
     {
-        $this->containsUpdateHandle(self::PAGE_ID_FROM_FIXTURE);
+        $this->containsUpdateHandle(self::PAGE_ID_FROM_FIXTURE, self::DEFAULT_TEST_FILE);
     }
 
     /**
@@ -109,20 +108,17 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function containsUpdateHandle(
         $identifier = self::GLOBAL_IDENTIFIER,
-        string $fileName = self::TEST_FILE)
+        string $fileName = self::GLOBAL_TEST_FILE)
     {
         $expectedHandle = "cms_page_view_selectable_{$identifier}_{$fileName}";
 
-        $handles = $this->layoutInterface->getUpdate()->getHandles();
+        $handles = $this->layout->getUpdate()->getHandles();
         $this->assertContains($expectedHandle, $handles);
     }
 
-    protected function setCustomUpdate(int $forPageId, string $fileName = self::TEST_FILE)
+    protected function setCustomUpdate(int $forPageId, string $fileName = self::GLOBAL_TEST_FILE)
     {
         $page = $this->getPage();
-
-        $this->layoutManager->setFakeFiles($forPageId, [$fileName]);
-
         $page->setData('layout_update_selected', $fileName);
         $this->pageResource->save($page);
     }
@@ -133,7 +129,7 @@ class PageFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function createPage(?string $pageIdentifier = self::PAGE_ID_FROM_FIXTURE): Page
     {
-        $page = $this->pageFactory->create(['customLayoutRepository' => $this->repository]);
+        $page = $this->pageFactory->create();
         $page->setStoreId(self::STORE_ID);
         $page->load($pageIdentifier, Page::IDENTIFIER);
 
