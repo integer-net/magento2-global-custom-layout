@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace IntegerNet\GlobalCustomLayout\Test\Integration;
 
-use IntegerNet\GlobalCustomLayout\Test\src\CategoryLayoutUpdateManager;
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -12,17 +11,21 @@ use Magento\Framework\Exception\NoSuchEntityException;
 /**
  * Tests whether global layout handles are correctly saved on categories
  * and retrieved on the frontend on Category views
+ *
+ * @magentoAppIsolation enabled
+ * @magentoAppArea frontend
+ * @magentoComponentsDir ../../../../vendor/integer-net/magento2-global-custom-layout/tests/Integration/_files/app/code/IntegerNet
  */
 class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
 {
     /** @var int */
     const CATEGORY_ID_FROM_FIXTURE = 5;
 
+    /** @var string */
+    const DEFAULT_TEST_FILE = 'defaultfile';
+
     /** @var CategoryRepositoryInterface $repository */
     protected $repository;
-
-    /** @var CategoryLayoutUpdateManager $layoutManager */
-    protected $layoutManager;
 
     /** @var CategoryInterface $category */
     protected $category;
@@ -31,7 +34,6 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
     {
         parent::setUp();
 
-        $this->layoutManager = $this->objectManager->get(CategoryLayoutUpdateManager::class);
         $this->repository = $this->objectManager->create(CategoryRepositoryInterface::class);
     }
 
@@ -82,7 +84,7 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function givenDefaultCustomUpdateSelected()
     {
-        $this->setCustomUpdate(self::CATEGORY_ID_FROM_FIXTURE);
+        $this->setCustomUpdate(self::CATEGORY_ID_FROM_FIXTURE, self::DEFAULT_TEST_FILE);
     }
 
     /**
@@ -91,13 +93,9 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      * @throws CouldNotSaveException
      * @throws NoSuchEntityException
      */
-    protected function setCustomUpdate(int $forCategoryId, string $fileName = self::TEST_FILE)
+    protected function setCustomUpdate(int $forCategoryId, string $fileName = self::GLOBAL_TEST_FILE)
     {
         $category = $this->getCategory();
-
-        $this->layoutManager->setFakeFiles($forCategoryId, [$fileName]);
-
-        //Updating the custom attribute.
         $category->setCustomAttribute('custom_layout_update_file', $fileName);
         $this->repository->save($category);
     }
@@ -117,12 +115,12 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
 
     protected function thenContainsGlobalUpdateHandle()
     {
-        $this->containsUpdateHandle(self::GLOBAL_IDENTIFIER, self::TEST_FILE);
+        $this->containsUpdateHandle(self::GLOBAL_IDENTIFIER, self::GLOBAL_TEST_FILE);
     }
 
     protected function thenContainsDefaultUpdateHandle()
     {
-        $this->containsUpdateHandle(self::CATEGORY_ID_FROM_FIXTURE, self::TEST_FILE);
+        $this->containsUpdateHandle(self::CATEGORY_ID_FROM_FIXTURE, self::DEFAULT_TEST_FILE);
     }
 
     /**
@@ -133,11 +131,11 @@ class CategoryFrontendControllerTest extends AbstractFrontendControllerTest
      */
     protected function containsUpdateHandle(
         $identifier = self::GLOBAL_IDENTIFIER,
-        string $fileName = self::TEST_FILE)
+        string $fileName = self::GLOBAL_TEST_FILE)
     {
         $expectedHandle = "catalog_category_view_selectable_{$identifier}_{$fileName}";
 
-        $handles = $this->layoutInterface->getUpdate()->getHandles();
+        $handles = $this->layout->getUpdate()->getHandles();
         $this->assertContains($expectedHandle, $handles);
     }
 

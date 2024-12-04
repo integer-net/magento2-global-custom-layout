@@ -8,10 +8,15 @@ use Magento\Framework\Component\ComponentRegistrar;
 use Magento\Framework\Module\ModuleList;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @magentoAppIsolation enabled
+ * @magentoAppArea frontend
+ * @magentoComponentsDir ../../../../vendor/integer-net/magento2-global-custom-layout/tests/Integration/_files/app/code/IntegerNet
+ */
 class ModuleTest extends TestCase
 {
     private const MODULE_NAME = 'IntegerNet_GlobalCustomLayout';
-
+    private const TEST_MODULE_NAME = 'IntegerNet_GlobalCustomLayoutTest';
     /**
      * @var ObjectManager
      */
@@ -27,6 +32,13 @@ class ModuleTest extends TestCase
         $registrar = new ComponentRegistrar();
         $paths = $registrar->getPaths(ComponentRegistrar::MODULE);
         $this->assertArrayHasKey(self::MODULE_NAME, $paths);
+    }
+
+    public function testTestModuleIsRegistered()
+    {
+        $registrar = new ComponentRegistrar();
+        $paths = $registrar->getPaths(ComponentRegistrar::MODULE);
+        $this->assertArrayHasKey(self::TEST_MODULE_NAME, $paths);
     }
 
     public function testModuleIsActive()
