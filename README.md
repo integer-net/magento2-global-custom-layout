@@ -34,7 +34,7 @@ These files can go anywhere where you'd normally put layout files. For example:
 You can now select the layout update at _any_ given Category/Product/Page, under **Custom layout update** field of **Design**.
 
 More info on default behaviour of selectable layouts: 
-[Magento DevDocs: Create cms-page/product/category-specific layouts](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html#create-cms-pageproductcategory-specific-layouts)
+[Magento DevDocs: Create cms-page/product/category-specific layouts](https://developer.adobe.com/commerce/frontend-core/guide/layouts/xml-manage/#create-selectable-layouts)
 
 ## Installation
 
@@ -58,7 +58,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ### Magento Integration Tests
 
-0. Configure test database in `dev/tests/integration/etc/install-config-mysql.php`. [Read more in the Magento docs.](https://devdocs.magento.com/guides/v2.3/test/integration/integration_test_execution.html) 
+0. Configure test database in `dev/tests/integration/etc/install-config-mysql.php`. [Read more in the Magento docs.](https://developer.adobe.com/commerce/testing/guide/integration/) 
 
 1. Copy `Test/Integration/phpunit.xml.dist` from the package to `dev/tests/integration/phpunit.xml` in your Magento installation.
 
@@ -77,7 +77,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email ww@integer-net.de instead of using the issue tracker.
+If you discover any security related issues, please email security@integer-net.de instead of using the issue tracker.
 
 ## Credits
 
